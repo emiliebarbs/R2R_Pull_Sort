@@ -468,7 +468,7 @@ def main():
     # Run space check, run validate, run untar, run sort
     landing_path = get_path()
     is_valid = validate_tarballs(landing_path)
-    sort_landing_zone(landing_path, 'data/r2r_master_inventory.sqlite', is_valid)
+    sort_landing_zone(landing_path, 'data/test.sqlite', is_valid)
 
 
 if __name__ == '__main__':

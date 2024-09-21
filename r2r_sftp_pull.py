@@ -17,7 +17,7 @@ import platform
 
 
 # SQLite file
-sqlite_file = 'data/r2r_master_inventory.sqlite'
+sqlite_file = 'data/test.sqlite'
 errors = []
 operating_system = platform.system()
 
