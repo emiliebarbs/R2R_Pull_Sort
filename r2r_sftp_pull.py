@@ -3,6 +3,8 @@ This script connects to the ldeo sftp server and queries the landing space for
 R2R/NCEI datasets and updates a SQLite database to create an inventory.
 It then queries the SQLite db for the selected data types and copies
 packages to the landing space given the amount of free space.
+
+FYI: Script is not functional as all PII has been anonymized
 """
 
 import time
@@ -745,22 +747,27 @@ def copy_packages(dir_list, landing_path):
 
 # Test creds
 
-'''R2R Main Code'''
 
-# Populating sqlite db
-all_dates = connect_to_sftp(operating_system, port_num, r2r_server_path, ngdc_files_path)
-new_inventory = check_date_dirs(all_dates, ngdc_files_path, sqlite_file)
-build_sqlite(new_inventory, sqlite_file)
+def main():
 
-# Prompts and space checks
-space_check = landing_space_bytes(ncei_landing_space='<NCEI Landing Space>')
-# Prompts for data types
-data_type_input = get_data_type(space_check[1])
+    # Populating sqlite db
+    all_dates = connect_to_sftp(operating_system, port_num, r2r_server_path, ngdc_files_path)
+    new_inventory = check_date_dirs(all_dates, ngdc_files_path, sqlite_file)
+    build_sqlite(new_inventory, sqlite_file)
 
-# Prompts for which packages to select
-pulldown_list = query_sqlite(sqlite_file, data_type_input, space_check[0])
-copy_packages(pulldown_list, '<NCEI Landing Space>')
+    # Prompts and space checks
+    space_check = landing_space_bytes(ncei_landing_space='<NCEI Landing Space>')
+    # Prompts for data types
+    data_type_input = get_data_type(space_check[1])
 
-# Print Errors
-if errors:
-    print(f'\nErrors: \n{errors}')
+    # Prompts for which packages to select
+    pulldown_list = query_sqlite(sqlite_file, data_type_input, space_check[0])
+    copy_packages(pulldown_list, '<NCEI Landing Space>')
+
+    # Print Errors
+    if errors:
+        print(f'\nErrors: \n{errors}')
+
+
+if __name__ == '__main__':
+    main()
